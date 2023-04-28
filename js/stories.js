@@ -25,6 +25,9 @@ function generateStoryMarkup(story) {
   const hostName = story.getHostName();
   return $(`
       <li id="${story.storyId}">
+        <span class="star">
+          <i class="${currentUser.checkFavorites(story) ? 'fas' : 'far'} fa-star"></i>
+        </span>
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -60,7 +63,22 @@ const handleAddStory = async (e) => {
   const newStory = await storyList.addStory(currentUser, { title, url, author });
   const $newStory = generateStoryMarkup(newStory);
   $allStoriesList.prepend($newStory);
-  $addStoryForm.toggleClass('hidden')
+  $addStoryForm.toggleClass('hidden');
 };
 
+// submit listener for adding stories
 $addStoryForm.on('submit', handleAddStory);
+
+const toggleFavorites = async (e) => {
+  const $target = $(e.target);
+  const targetId = $target.parent().parent().attr('id');
+  const targetStory = storyList.stories.find((story) => story.storyId === targetId);
+  if ($target.hasClass('fas')) {
+    await currentUser.removeFavorites(targetStory);
+  } else {
+    await currentUser.addFavorites(targetStory);
+  }
+  $target.toggleClass('fas far');
+};
+
+$allStoriesList.on('click', 'i', toggleFavorites);

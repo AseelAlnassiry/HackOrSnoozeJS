@@ -23,7 +23,7 @@ class Story {
   /** Parses hostname out of URL and returns it. */
 
   getHostName() {
-    const url = new URL(this.url)
+    const url = new URL(this.url);
     return url.hostname;
   }
 }
@@ -80,7 +80,7 @@ class StoryList {
   }
 
   // Delete story from db and local storylist
-  
+
   async deleteStory(user, targetStory) {
     const token = user.loginToken;
     await axios.delete(`${BASE_URL}/stories/${targetStory.storyId}`, { data: { token } });
@@ -196,5 +196,21 @@ class User {
       console.error('loginViaStoredCredentials failed', err);
       return null;
     }
+  }
+
+  async addFavorites(targetStory) {
+    const token = this.loginToken;
+    await axios.post(`${BASE_URL}/users/${this.username}/favorites/${targetStory.storyId}`, { token });
+    this.favorites.push(targetStory);
+  }
+
+  async removeFavorites(targetStory) {
+    const token = this.loginToken;
+    await axios.delete(`${BASE_URL}/users/${this.username}/favorites/${targetStory.storyId}`, { data: { token } });
+    this.favorites = this.favorites.filter((story) => story.storyId === targetStory.storyId);
+  }
+
+  checkFavorites(targetStory) {
+    return this.favorites.some((story) => story.storyId === targetStory.storyId);
   }
 }
