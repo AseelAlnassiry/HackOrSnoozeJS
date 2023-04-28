@@ -41,3 +41,19 @@ const toggleSubmitForm = () => {
 };
 
 $addStoryBtn.on('click', toggleSubmitForm);
+
+// Toggle the show favorites
+const putFavoritesOnPage = () => {
+  hidePageComponents();
+  $favoriteStoriesList.empty();
+
+  // loop through all the favorites and generate HTML for them
+  for (let story of currentUser.favorites) {
+    const $story = generateStoryMarkup(story);
+    $favoriteStoriesList.append($story);
+  }
+
+  $favoriteStoriesList.show()
+};
+
+$showFavBtn.on('click', putFavoritesOnPage)

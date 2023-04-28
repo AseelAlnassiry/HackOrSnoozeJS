@@ -69,6 +69,7 @@ const handleAddStory = async (e) => {
 // submit listener for adding stories
 $addStoryForm.on('submit', handleAddStory);
 
+// function that toggles the favorites
 const toggleFavorites = async (e) => {
   const $target = $(e.target);
   const targetId = $target.parent().parent().attr('id');
@@ -79,6 +80,10 @@ const toggleFavorites = async (e) => {
     await currentUser.addFavorites(targetStory);
   }
   $target.toggleClass('fas far');
+
+  if ($target.parent().parent().parent().attr('id') === 'fav-stories-list') putFavoritesOnPage();
 };
 
+// click handler for toggling favorites on stars
 $allStoriesList.on('click', 'i', toggleFavorites);
+$favoriteStoriesList.on('click', 'i', toggleFavorites);
