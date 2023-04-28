@@ -1,0 +1,43 @@
+/* Navigation bar */
+
+nav {
+  display: flex;
+  background-color: #ff6600;
+  align-items: center;
+  padding: 20px 20px;
+  border-radius: 3px 3px 0 0;
+}
+
+.navbar-brand {
+  font-weight: bold;
+}
+
+#nav-all {
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.nav-link {
+  font-size: 0.85rem;
+  margin: 0 3px;
+}
+
+.nav-right {
+  margin-left: auto;
+  text-align: right;
+}
+
+.nav-left {
+  margin-left: 1rem;
+}
+
+.nav-left button {
+  background-color: transparent;
+  border: none;
+  border-left: 1px solid black;
+  cursor: pointer;
+}
+
+.nav-left button:hover {
+  text-decoration: underline;
+}
