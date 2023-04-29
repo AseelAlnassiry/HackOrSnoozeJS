@@ -76,7 +76,8 @@ const handleAddStory = async (e) => {
   const $newStory = generateStoryMarkup(newStory);
   $allStoriesList.prepend($newStory);
   $addStoryForm.toggleClass('hidden');
-  $addStoryForm.reset();
+  $addStoryForm.trigger('reset');
+  putStoriesOnPage();
 };
 
 // submit listener for adding stories
@@ -86,7 +87,7 @@ $addStoryForm.on('submit', handleAddStory);
 const toggleFavorites = async (e) => {
   if (!currentUser) return;
   const $target = $(e.target);
-  const targetId = $target.parent().parent().attr('id');
+  const targetId = $target.closest('li').attr('id');
   const targetStory = storyList.stories.find((story) => story.storyId === targetId);
   if ($target.hasClass('fas')) {
     await currentUser.removeFavorites(targetStory);
@@ -95,7 +96,7 @@ const toggleFavorites = async (e) => {
   }
   $target.toggleClass('fas far');
 
-  if ($target.parent().parent().parent().attr('id') === 'fav-stories-list') putFavoritesOnPage();
+  if ($target.closest('ol').attr('id') === 'fav-stories-list') putFavoritesOnPage();
 };
 
 // click handler for toggling favorites on stars
@@ -106,7 +107,7 @@ $ownStoriesList.on('click', 'i.fa-star', toggleFavorites);
 // function that handles deleting a story
 const handleDelete = async (e) => {
   const $target = $(e.target);
-  const targetId = $target.parent().parent().attr('id');
+  const targetId = $target.closest('li').attr('id');
   const targetStory = storyList.stories.find((story) => story.storyId === targetId);
   await storyList.deleteStory(currentUser, targetStory);
   putOwnOnPage();

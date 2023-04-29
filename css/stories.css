@@ -53,6 +53,6 @@
 }
 
 /* Add stories form */
-form {
+#add-story-form {
   border-bottom: 2px solid #ff6600;
 }
