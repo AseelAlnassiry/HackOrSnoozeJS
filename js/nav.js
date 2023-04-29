@@ -32,6 +32,9 @@ function updateNavOnLogin() {
   $('.main-nav-links').show();
   $navLogin.hide();
   $navLogOut.show();
+  $navLeft.toggleClass('hidden');
+  $loginForm.hide();
+  $signupForm.hide();
   $navUserProfile.text(`${currentUser.username}`).show();
 }
 
@@ -46,14 +49,32 @@ $addStoryBtn.on('click', toggleSubmitForm);
 const putFavoritesOnPage = () => {
   hidePageComponents();
   $favoriteStoriesList.empty();
+  if (currentUser.favorites.length === 0)
+    $favoriteStoriesList.html('<h5>You dont have any favorites!</h5>');
 
   // loop through all the favorites and generate HTML for them
   for (let story of currentUser.favorites) {
     const $story = generateStoryMarkup(story);
     $favoriteStoriesList.append($story);
   }
-
-  $favoriteStoriesList.show()
+  $favoriteStoriesList.show();
 };
 
-$showFavBtn.on('click', putFavoritesOnPage)
+// Toggle the show own stories
+// function that toggles own stories
+const putOwnOnPage = async (e) => {
+  hidePageComponents();
+  $ownStoriesList.empty();
+  if (currentUser.ownStories.length === 0)
+    $ownStoriesList.html('<h5>You dont own any stories!</h5>');
+  for (let story of currentUser.ownStories) {
+    const $story = generateStoryMarkup(story, true);
+    $ownStoriesList.append($story);
+  }
+
+  $ownStoriesList.show();
+};
+
+$showFavBtn.on('click', putFavoritesOnPage);
+
+$showOwnBtn.on('click', putOwnOnPage);

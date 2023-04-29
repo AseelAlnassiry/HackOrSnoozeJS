@@ -8,6 +8,8 @@
   color: gray;
   font-size: 0.8rem;
   margin: 10px 0;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.509);
+  padding: 10px 0;
 }
 
 #stories-loading-msg {
@@ -16,29 +18,41 @@
   margin: 20px 30px;
 }
 
-
 /* Individual stories */
 
 .story-link {
   color: black;
   font-size: 0.85rem;
-  font-weight: normal;
+  font-weight: bold;
   margin: 18px 0;
+}
+
+.inner-li {
+  display: flex;
+  gap: 10px;
+}
+
+.main-story-cont {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .story-link:hover {
   text-decoration: none;
 }
 
-.story-author {
-  margin-left: 2em;
-}
-
 .story-user {
   display: block;
+  color: #ffa600;
+}
+
+.story-author {
+  color: green;
+  font: bold;
 }
 
 /* Add stories form */
 form {
-  border-bottom: 2px solid #FF6600;
+  border-bottom: 2px solid #ff6600;
 }

@@ -76,6 +76,7 @@ class StoryList {
     const res = await axios.post(`${BASE_URL}/stories`, { token, story: newStory });
     const story = new Story(res.data.story);
     this.stories.unshift(story);
+    user.ownStories.unshift(story)
     return story;
   }
 
@@ -84,9 +85,9 @@ class StoryList {
   async deleteStory(user, targetStory) {
     const token = user.loginToken;
     await axios.delete(`${BASE_URL}/stories/${targetStory.storyId}`, { data: { token } });
-    this.stories = this.stories.filter((story) => story.storyId === targetStory.storyId);
-    user.ownStories = user.ownStories.filter((story) => story.storyId === targetStory.storyId);
-    user.favorites = user.favorites.filter((story) => story.storyId === targetStory.storyId);
+    this.stories = this.stories.filter((story) => story.storyId !== targetStory.storyId);
+    user.ownStories = user.ownStories.filter((story) => story.storyId !== targetStory.storyId);
+    user.favorites = user.favorites.filter((story) => story.storyId !== targetStory.storyId);
   }
 }
 
