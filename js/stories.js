@@ -17,11 +17,11 @@ async function getAndShowStoriesOnStart() {
  * - story: an instance of Story
  *
  * Returns the markup for the story.
+ * This has been modified to show the trash bin icon if the page
+ * is the own page!
  */
 
 function generateStoryMarkup(story, own = false) {
-  // console.debug("generateStoryMarkup", story);
-
   const hostName = story.getHostName();
   return $(`
       <li id="${story.storyId}">

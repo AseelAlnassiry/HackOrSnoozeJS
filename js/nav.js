@@ -61,7 +61,6 @@ const putFavoritesOnPage = () => {
 };
 
 // Toggle the show own stories
-// function that toggles own stories
 const putOwnOnPage = async (e) => {
   hidePageComponents();
   $ownStoriesList.empty();
@@ -75,6 +74,8 @@ const putOwnOnPage = async (e) => {
   $ownStoriesList.show();
 };
 
+// JQuery listener for favorites
 $showFavBtn.on('click', putFavoritesOnPage);
 
+// JQuery listener for own stories
 $showOwnBtn.on('click', putOwnOnPage);

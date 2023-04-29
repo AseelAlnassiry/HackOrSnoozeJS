@@ -20,7 +20,9 @@ class Story {
     this.createdAt = createdAt;
   }
 
-  /** Parses hostname out of URL and returns it. */
+  /** Parses hostname out of URL and returns it.
+   *  This is done using the URL object which will auto-gen a hostname based on a given url
+   */
 
   getHostName() {
     const url = new URL(this.url);
@@ -80,8 +82,7 @@ class StoryList {
     return story;
   }
 
-  // Delete story from db and local storylist
-
+  // Delete story from API and local storylist
   async deleteStory(user, targetStory) {
     const token = user.loginToken;
     await axios.delete(`${BASE_URL}/stories/${targetStory.storyId}`, { data: { token } });
@@ -199,18 +200,21 @@ class User {
     }
   }
 
+  // Add a story to a users favorites locally and on the API
   async addFavorites(targetStory) {
     const token = this.loginToken;
     await axios.post(`${BASE_URL}/users/${this.username}/favorites/${targetStory.storyId}`, { token });
     this.favorites.push(targetStory);
   }
 
+  // Delete a story from a users favorites locally and on the API
   async removeFavorites(targetStory) {
     const token = this.loginToken;
     await axios.delete(`${BASE_URL}/users/${this.username}/favorites/${targetStory.storyId}`, { data: { token } });
     this.favorites = this.favorites.filter((story) => story.storyId !== targetStory.storyId);
   }
 
+  // Check if a story is currently in a users favorites using array methods
   checkFavorites(targetStory) {
     return this.favorites.some((story) => story.storyId === targetStory.storyId);
   }
